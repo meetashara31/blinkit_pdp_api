@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blinkit Product Scraper</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-indigo-200 min-h-screen flex flex-col items-center py-10">
+
+  <!-- Wrapper -->
+  <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-8">
+    <!-- Header -->
+    <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8 tracking-tight">
+      Blinkit Product Scraper 🚀
+    </h1>
+
+    <!-- Search Form -->
+    <form action="/scrape-ui" method="post" class="flex flex-col sm:flex-row gap-4 mb-8">
+      <input type="text" name="url_or_prid" placeholder="Enter Blinkit product URL or Product ID"
+        value="{{ url_or_prid or '' }}"
+        class="flex-1 px-5 py-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-lg"
+        required>
+      <button type="submit"
+        class="px-8 py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition text-lg shadow">
+        Extract
+      </button>
+    </form>
+
+    <!-- Error Alert -->
+    {% if error %}
+      <div class="p-4 mb-6 text-red-700 bg-red-100 rounded-lg border border-red-300" role="alert">
+        <strong>Error:</strong> {{ error }}
+      </div>
+    {% endif %}
+
+    <!-- Results Section -->
+    {% if data %}
+      <div class="space-y-6 animate-fadeIn">
+
+        <!-- Product Name & Brand -->
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-gray-800">{{ data.product_name }}</h2>
+          <p class="text-gray-500 mt-1">Brand: <span class="font-medium text-indigo-600">{{ data.brand_name }}</span></p>
+        </div>
+
+        <!-- Main Image -->
+        <div class="flex justify-center">
+          <img src="{{ data.main_image }}" alt="Product Image"
+               class="rounded-xl shadow-md max-h-80 object-contain hover:scale-105 transform transition">
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="p-5 bg-indigo-50 rounded-xl shadow text-center">
+            <p class="text-sm text-gray-500">Current Price</p>
+            <p class="text-2xl font-bold text-indigo-700">₹{{ data.price }}</p>
+          </div>
+          <div class="p-5 bg-red-50 rounded-xl shadow text-center">
+            <p class="text-sm text-gray-500">MRP</p>
+            <p class="text-2xl font-bold text-red-600 line-through">₹{{ data.mrp }}</p>
+          </div>
+        </div>
+
+        <!-- Ratings & Reviews -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <div class="p-5 bg-blue-50 rounded-xl shadow text-center">
+            <p class="text-sm text-gray-500">Average Rating</p>
+            <p class="text-xl font-semibold text-blue-700">{{ data.avg_rating }} ⭐</p>
+          </div>
+          <div class="p-5 bg-purple-50 rounded-xl shadow text-center">
+            <p class="text-sm text-gray-500">Total Reviews</p>
+            <p class="text-xl font-semibold text-purple-700">{{ data.rating_count }}</p>
+          </div>
+          <div class="p-5 bg-yellow-50 rounded-xl shadow text-center">
+            <p class="text-sm text-gray-500">Availability</p>
+            <p class="text-lg font-semibold text-yellow-700">{{ data.availability }}</p>
+          </div>
+        </div>
+
+        <!-- Additional Images -->
+        {% if data.images %}
+          <div class="mt-6">
+            <h3 class="text-lg font-bold mb-2 text-gray-700">More Images</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {% for img in data.images %}
+                <img src="{{ img }}" alt="Extra Image"
+                     class="rounded-lg shadow-sm hover:scale-105 transform transition">
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  <!-- Other Details -->
+{% if data.others %}
+<div class="mt-8">
+  <h3 class="text-2xl font-semibold mb-6 text-gray-900 border-b pb-2">Other Details</h3>
+
+  <div id="accordion-others" data-accordion="collapse" class="space-y-4">
+    {% for key, value in data.others.items() %}
+    <div class="border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+      <h2 id="accordion-heading-{{ loop.index }}">
+        <button 
+          type="button" 
+          class="flex justify-between items-center w-full p-5 text-left bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transition-all"
+          data-accordion-target="#accordion-body-{{ loop.index }}" 
+          aria-expanded="false" 
+          aria-controls="accordion-body-{{ loop.index }}"
+        >
+          <span class="text-base font-medium text-gray-800">{{ key }}</span>
+          <svg data-accordion-icon class="w-5 h-5 text-gray-500 transition-transform duration-200 rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+      </h2>
+      <div id="accordion-body-{{ loop.index }}" class="hidden" aria-labelledby="accordion-heading-{{ loop.index }}">
+        <div class="p-5 bg-white text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+          {{ value }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
+  <!-- Swagger Link -->
+  <div class="mt-8">
+    <a href="/docs" target="_blank"
+       class="px-6 py-3 bg-gray-900 text-white rounded-xl shadow hover:bg-black transition text-lg">
+      Open Swagger UI
+    </a>
+  </div>
+
+  <!-- Small animation -->
+  <style>
+    .animate-fadeIn {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+</body>
+</html>
