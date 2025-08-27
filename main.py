@@ -19,7 +19,13 @@ templates = Jinja2Templates(directory="templates")
 # Root endpoint
 @app.get("/", response_class=HTMLResponse)
 def home_ui(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "url_or_prid": "",
+        "data": None,
+        "error": None
+    })
+
 
 
 # API endpoint (already working one)
