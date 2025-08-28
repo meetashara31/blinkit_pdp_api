@@ -32,7 +32,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 
 
-API will be live at 👉 http://127.0.0.1:8000
+API will test live at 👉 https://blinkit-api-d7dr.onrender.com/scrape-ui
 
 📌 Usage
 🟢 Swagger UI
@@ -66,6 +66,8 @@ FastAPI
 
 Uvicorn
  – ASGI server
+Templating Engine
+ - Jinja
 
 Python
  – core language
