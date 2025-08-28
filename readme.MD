@@ -7,7 +7,7 @@
 [![Flowbite](https://img.shields.io/badge/Flowbite-Components-1a56db)](https://flowbite.com/)  
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
 
-Here is the link to test the api > https://blinkit-api-d7dr.onrender.com/scrape-ui
+Here is the link to test the api > https://blinkit-api-d7dr.onrender.com
 
 ## 📖 Project Overview
 The **Blinkit Product Scraper (FastAPI + Tailwind UI)** is a lightweight and modern **FastAPI** project that extracts product details from Blinkit using PRID or the url of the product.  
@@ -99,6 +99,7 @@ You are free to use, modify, and distribute this project.
 
 Contributions are welcome!
 If you like this project, give it a ⭐ on GitHub to support it 🙌
+
 
 
 
