@@ -1,53 +1,70 @@
 # 🛒 Blinkit Product Scraper (FastAPI + Tailwind UI)
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)  
-[![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://www.python.org/)  
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
+[![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?logo=fastapi)](https://fastapi.tiangolo.com/)  
+[![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20Server-ff69b4)](https://www.uvicorn.org/)  
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-UI-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)  
+[![Flowbite](https://img.shields.io/badge/Flowbite-Components-1a56db)](https://flowbite.com/)  
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
 
-A modern **FastAPI-based API** to fetch structured **Blinkit product details** using either a **Product URL** or **Product ID (prid)**.  
-Get details like product name, price, MRP, availability, images, description, ingredients, and more in clean JSON format.  
+Here is the link to test the api > https://blinkit-api-d7dr.onrender.com/scrape-ui
+
+## 📖 Project Overview
+The **Blinkit Product Scraper (FastAPI + Tailwind UI)** is a lightweight and modern **FastAPI** project that extracts product details from Blinkit using PRID or the url of the product.  
+
+It provides both:
+- 🟢 **REST API JSON endpoints** for developers  
+- 🎨 **Modern UI (Tailwind + Flowbite)** for testing directly in the browser  
 
 ---
 
 ## ✨ Features
-- 🔍 Input: Blinkit Product URL or Product ID (`prid`)  
-- 📦 Output: Structured JSON with product info  
-- ⚡ Built with **FastAPI** (super fast, async-ready)  
-- 🛡️ Robust error handling for invalid inputs  
-- 📖 Interactive Swagger docs at `/docs`  
-- 🔗 Easy integration into data pipelines, dashboards, or e-commerce tools  
+- 🔍 Scrapeusing PRID or the url of the product  
+- ⚡ Built with **FastAPI + Uvicorn** for high performance  
+- 🎨 User-friendly UI with **TailwindCSS & Flowbite**  
+- 📦 Clean project structure (models, scraper, templates)  
+- 🛠️ Error handling with proper API responses  
+
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation
 
-### 1️⃣ Clone the repo
+### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/blinkit-product-scraper.git
-cd blinkit-product-scraper
-2️⃣ Install dependencies
+git https://github.com/meetashara31/blinkit_pdp_api
+
+
+2️⃣ Create Virtual Environment
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+
+3️⃣ Install Dependencies
 pip install -r requirements.txt
 
-3️⃣ Run the API
-uvicorn main:app --reload
+▶️ Running the Project
+
+Start the FastAPI server:
+
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 
-API will test live at 👉 https://blinkit-api-d7dr.onrender.com/scrape-ui
+Now visit:
 
-📌 Usage
-🟢 Swagger UI
+🌐 UI: http://127.0.0.1:8000
 
-Visit: http://127.0.0.1:8000/docs
+📜 API Docs: http://127.0.0.1:8000/docs
 
-🟢 Example Request (cURL / Postman)
+🟢 Health Check: http://127.0.0.1:8000/health
 
-POST /extract
+📦 Example Usage
+API Request
+curl -X POST "http://127.0.0.1:8000/scrape" \
+     -H "Content-Type: application/json" \
+     -d '{"asin": "B08N5WRWNW"}'
 
-{
-  "url_or_prid": "490670"
-}
-
-🟢 Example Response
+API Response
 {
   "product_id": "490670",
   "product_name": "Colgate Visible White O2 Whitening Toothpaste (25 g)",
@@ -59,15 +76,30 @@ POST /extract
   "others": {"Description": "...", "Ingredients": "..."}
 }
 
-🛠️ Tech Stack
+🖼️ UI Preview
 
-FastAPI
- – web framework
+The UI is built using TailwindCSS + Flowbite for a clean modern look.
+It lets you enter an PRID or the url of the product, test the scraper, and view results in real-time.
 
-Uvicorn
- – ASGI server
-Templating Engine
- - Jinja
+📌 Project Structure
+├── main.py          # FastAPI app entry point
+├── utils.py        # usefull functions for cleaning response
+├── scraper.py       # Scraper logic
+├── templates/       # Jinja2 templates for UI
+│   └── index.html
+├── requirements.txt # Dependencies
+└── README.md        # Project documentation
 
-Python
- – core language
+🛡️ License
+
+This project is licensed under the MIT License.
+You are free to use, modify, and distribute this project.
+
+⭐ Contributing
+
+Contributions are welcome!
+If you like this project, give it a ⭐ on GitHub to support it 🙌
+
+
+
+
